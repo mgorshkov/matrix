@@ -1,4 +1,5 @@
 #include <iostream>
+#include <tuple>
 
 #include "matrixlib.h"
 
@@ -23,12 +24,12 @@ int main(int, char const **)
 	    std::cout << "Occupied: " << matrix.size() << std::endl;
         for (auto occupied : matrix)
 	    {
-	    	int x;
-			int y;
+            std::list<int> l;
 			int v;
-//			std::tie(x, y, v) = occupied;
-//			std::cout << x << ' ' << y << ' ' << v << std::endl;
-            std::cout << occupied;
+            std::tie(l, v) = occupied;
+            for (auto index : l)
+                std::cout << index << ' ';
+            std::cout << v << std::endl;
         }
     }
     catch (const std::exception &e)

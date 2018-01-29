@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include <list>
-#include <assert.h>
+#include <tuple>
 
 template <typename T>
 struct IndexNode
@@ -57,31 +57,40 @@ public:
 
         Iterator(const IndexNodeIterator& iterator_)
             : iterator(iterator_)
-            , iteratorChildren((*iterator)->children.begin())
-    	{    		
+        {
+            for (size_t i = 1; i < N; ++i)
+                iterators[i] = (*iterators[i - 1])->children.begin();
         }
 
         Iterator& operator ++ ()
     	{
-            auto c = (*iterator)->children;
-            if (++iteratorChildren == c.end())
-                ++iterator;
+            for (size_t i = N; i--; )
+            {
+                auto c = (*iterators[i - 1])->children;
+                if (++iterators[i] == c.end())
+                    ++iterators[i - 1];
+            }
     		return *this;
     	}
 
-    	bool operator != (Iterator it)
+        bool operator != (Iterator it) const
     	{
-            return iterator != it.iterator;
+            for (size_t i = N; i--; )
+                if (iterator != it.iterator)
+                    return false;
+            return true;
     	}
 
-        size_t operator * ()
-    	{
-            return (*iterator)->index;
+        std::tuple<std::list<size_t>, T> operator * () const
+    	{           
+            std::list<size_t> indices;
+            for (size_t i = 0; i < N - 1; ++i)
+                indices.push_back((*iterators[i])->index);
+            return std::make_tuple<std::list<size_t>, T>(indices, (*iterators[N - 1])->value);;
     	}
 
     private:
-        IndexNodeIterator iterator;
-        IndexNodeIterator iteratorChildren;
+        IndexNodeIterator iterators[N];
     };
 
     Iterator begin()
