@@ -4,6 +4,7 @@
 
 #include <list>
 #include <utility>
+#include <algorithm>
 
 template <typename T>
 struct IndexNode
@@ -93,7 +94,7 @@ public:
             std::list<size_t> indices;
             for (size_t i = 0; i < N - 1; ++i)
                 indices.push_back((*iterators[i])->index);
-            return std::pair<std::list<size_t>, T>{indices, *(*iterators[N - 1])->value};
+            return std::pair<std::list<size_t>, T>{indices, *((*iterators[N - 1])->value)};
     	}
 
     private:
@@ -132,15 +133,22 @@ public:
 
     size_t size() const
     {
-        return root->size();
+        return std::count_if(root->begin(), root->end(),
+            [](auto node)
+            {
+                return *node->value != Default;
+            });
     }
 
     T& operator [] (size_t index)
     {
-        for (auto node : *root)
-            if (node->index == index)
-                return *node->value;
-
+        auto it = std::find_if(root->begin(), root->end(),
+            [index](auto node)
+            {
+                return node->index == index;
+            });
+        if (it != root->end())
+            return *(*it)->value;
         auto node = new IndexNode<T>{index, {}, new T(Default)};
         root->push_back(node);
         return *node->value;
