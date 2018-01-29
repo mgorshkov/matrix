@@ -55,14 +55,17 @@ public:
     public:
         using IndexNodeIterator = typename std::list<IndexNodePtr<T>>::iterator;
 
-        Iterator(const IndexNodeIterator& iterator_)
+        Iterator(const IndexNodeIterator& iterator_, bool isBegin)
         {
             iterators[0] = iterator_;
 
-            for (size_t i = 1; i < N; ++i)
+            if (isBegin)
             {
-                auto container = (*iterators[i - 1])->children;
-                iterators[i] = container.begin();
+                for (size_t i = 1; i < N; ++i)
+                {
+                    auto container = (*iterators[i - 1])->children;
+                    iterators[i] = container.begin();
+                }
             }
         }
 
@@ -80,7 +83,7 @@ public:
         bool operator != (Iterator it) const
     	{
             for (size_t i = N; i--; )
-                if (iterators[i] != it.iterators[i])
+                if (iterators[i] == it.iterators[i])
                     return false;
             return true;
     	}
@@ -99,12 +102,12 @@ public:
 
     Iterator begin()
     {
-        return Iterator(root->begin());
+        return Iterator(root->begin(), true);
     }
 
     Iterator end()
     {
-        return Iterator(root->end());
+        return Iterator(root->end(), false);
     }
 
 private:

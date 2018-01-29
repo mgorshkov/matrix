@@ -4,17 +4,12 @@ find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 configure_file(version.h.in version.h)
 
-if (DEBUG_PRINT)
-    message("DEBUG_PRINT is activated!")
-    add_definitions(-DDEBUG_PRINT)
-endif()
-
 add_executable(matrix matrix.cpp)
 add_executable(matrix_test matrix_test.cpp)
 add_library(matrixlib matrixlib.cpp)
 
 set_target_properties(matrix matrix_test PROPERTIES
-#	COMPILE_OPTIONS -Wpedantic -Wall -Wextra
+	COMPILE_OPTIONS -Wpedantic -Wall -Wextra
 	CMAKE_CXX_STANDARD 17
 	CMAKE_CXX_STANDARD_REQUIRED ON
 )
