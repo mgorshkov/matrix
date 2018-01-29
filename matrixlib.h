@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include <list>
-#include <tuple>
+#include <utility>
 
 template <typename T>
 struct IndexNode
@@ -56,18 +56,22 @@ public:
         using IndexNodeIterator = typename std::list<IndexNodePtr<T>>::iterator;
 
         Iterator(const IndexNodeIterator& iterator_)
-            : iterator(iterator_)
         {
+            iterators[0] = iterator_;
+
             for (size_t i = 1; i < N; ++i)
-                iterators[i] = (*iterators[i - 1])->children.begin();
+            {
+                auto container = (*iterators[i - 1])->children;
+                iterators[i] = container.begin();
+            }
         }
 
         Iterator& operator ++ ()
     	{
             for (size_t i = N; i--; )
             {
-                auto c = (*iterators[i - 1])->children;
-                if (++iterators[i] == c.end())
+                auto container = (*iterators[i - 1])->children;
+                if (++iterators[i] == container.end())
                     ++iterators[i - 1];
             }
     		return *this;
@@ -76,17 +80,17 @@ public:
         bool operator != (Iterator it) const
     	{
             for (size_t i = N; i--; )
-                if (iterator != it.iterator)
+                if (iterators[i] != it.iterators[i])
                     return false;
             return true;
     	}
 
-        std::tuple<std::list<size_t>, T> operator * () const
+        std::pair<std::list<size_t>, T> operator * () const
     	{           
             std::list<size_t> indices;
             for (size_t i = 0; i < N - 1; ++i)
                 indices.push_back((*iterators[i])->index);
-            return std::make_tuple<std::list<size_t>, T>(indices, (*iterators[N - 1])->value);;
+            return std::pair<std::list<size_t>, T>{indices, *(*iterators[N - 1])->value};
     	}
 
     private:

@@ -24,12 +24,9 @@ int main(int, char const **)
 	    std::cout << "Occupied: " << matrix.size() << std::endl;
         for (auto occupied : matrix)
 	    {
-            std::list<int> l;
-			int v;
-            std::tie(l, v) = occupied;
-            for (auto index : l)
+            for (auto index : occupied.first)
                 std::cout << index << ' ';
-            std::cout << v << std::endl;
+            std::cout << occupied.second << std::endl;
         }
     }
     catch (const std::exception &e)
