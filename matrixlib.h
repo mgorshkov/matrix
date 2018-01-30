@@ -111,8 +111,10 @@ public:
 
         bool operator != (Iterator it) const
         {
-            for (size_t i = N; i--; )
-                if (iterators[i] == it.iterators[i])
+            if (rootContainer != it.rootContainer)
+                return true;
+            for (size_t i = 0; i < N; ++i)
+               if (iterators[i] == it.iterators[i])
                     return false;
             return true;
     	}
@@ -122,13 +124,13 @@ public:
             assert (iterators[0] != rootContainer->end());
 
             std::list<size_t> indices;
-            for (size_t i = 0; i < N - 1; ++i)
+            IndexNodePtr<T> node;
+            for (size_t i = 0; i < N; ++i)
             {
-                auto node = *iterators[i];
+                node = *iterators[i];
                 indices.push_back(node->index);
             }
 
-            auto& node = *iterators[N - 1];
             return std::pair<std::list<size_t>, T>{indices, *(node->value)};
         }
 
@@ -188,6 +190,17 @@ public:
         auto node = new IndexNode<T>{index, {}, new T(Default)};
         root->push_back(node);
         return *node->value;
+    }
+
+    using IndexNodeIterator = typename std::list<IndexNodePtr<T>>::iterator;
+    IndexNodeIterator begin()
+    {
+        return root->begin();
+    }
+
+    IndexNodeIterator end()
+    {
+        return root->end();
     }
 
 private:
