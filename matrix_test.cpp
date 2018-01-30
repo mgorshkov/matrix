@@ -33,8 +33,8 @@ BOOST_AUTO_TEST_CASE(test_iterator)
 
     int loops = 0;
     for (auto c: matrix)
-    {        
-        std::list<size_t> l{100, 100};        
+    {
+        std::list<size_t> l{100, 100};
         BOOST_CHECK_EQUAL(c.first.size(), l.size());
         BOOST_CHECK(c.first == l);
         BOOST_CHECK_EQUAL(c.second, 314);

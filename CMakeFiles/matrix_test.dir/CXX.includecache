@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mgorshkov/Work/matrix/matrix_test.cpp
+boost/test/unit_test.hpp
+-
+matrixlib.h
+/home/mgorshkov/Work/matrix/matrixlib.h
+
+/home/mgorshkov/Work/matrix/matrixlib.h
+iostream
+-
+list
+-
+utility
+-
+

@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++1z  -rdynamic CMakeFiles/matrix_test.dir/matrix_test.cpp.o  -o matrix_test -lboost_unit_test_framework libmatrixlib.a 

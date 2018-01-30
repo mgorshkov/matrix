@@ -1,10 +1,9 @@
 #pragma once
 
-#include <iostream>
-
 #include <list>
 #include <utility>
 #include <algorithm>
+#include <assert.h>
 
 template <typename T>
 struct IndexNode
@@ -43,9 +42,15 @@ public:
 
     Matrix<T, N - 1, Default> operator [] (size_t index)
     {
-        for (auto node : *root)
-            if (node->index == index)
-                return Matrix<T, N - 1, Default>(&node->children);
+        auto it = std::find_if(root->begin(), root->end(),
+            [index](auto node)
+            {
+                return node->index == index;
+            });
+
+        if (it != root->end())
+            return Matrix<T, N - 1, Default>(&(*it)->children);
+
         auto node = new IndexNode<T>{index, {}, new T(Default)};
         root->push_back(node);
         return Matrix<T, N - 1, Default>(&node->children);
@@ -56,33 +61,56 @@ public:
     public:
         using IndexNodeIterator = typename std::list<IndexNodePtr<T>>::iterator;
 
-        Iterator(const IndexNodeIterator& iterator_, bool isBegin)
+        Iterator(std::list<IndexNodePtr<T>>* rootContainer_, bool isBegin)
+            : rootContainer(rootContainer_)
         {
-            iterators[0] = iterator_;
-
             if (isBegin)
             {
+                iterators[0] = rootContainer->begin();
+
                 for (size_t i = 1; i < N; ++i)
                 {
-                    auto container = (*iterators[i - 1])->children;
+                    auto& node = *iterators[i - 1];
+                    auto& container = node->children;
                     iterators[i] = container.begin();
+                }
+            }
+            else
+            {
+                iterators[0] = rootContainer->end();
+                auto& node = *std::prev(iterators[0]);
+
+                for (size_t i = 1; i < N; ++i)
+                {
+                    auto& container = node->children;
+                    iterators[i] = container.end();
+                    node = *std::prev(iterators[i]);
                 }
             }
         }
 
         Iterator& operator ++ ()
-    	{
+        {
+            assert (iterators[0] != rootContainer->end());
+
             for (size_t i = N; i--; )
             {
-                auto container = (*iterators[i - 1])->children;
-                if (++iterators[i] == container.end())
+                std::list<IndexNodePtr<T>>* container;
+                if (i == 0)
+                    container = rootContainer;
+                else
+                {
+                    auto& node = *iterators[i - 1];
+                    container = &node->children;
+                }
+                if (++iterators[i] == container->end())
                     ++iterators[i - 1];
             }
-    		return *this;
-    	}
+            return *this;
+        }
 
         bool operator != (Iterator it) const
-    	{
+        {
             for (size_t i = N; i--; )
                 if (iterators[i] == it.iterators[i])
                     return false;
@@ -90,25 +118,33 @@ public:
     	}
 
         std::pair<std::list<size_t>, T> operator * () const
-    	{           
+        {
+            assert (iterators[0] != rootContainer->end());
+
             std::list<size_t> indices;
             for (size_t i = 0; i < N - 1; ++i)
-                indices.push_back((*iterators[i])->index);
-            return std::pair<std::list<size_t>, T>{indices, *((*iterators[N - 1])->value)};
-    	}
+            {
+                auto node = *iterators[i];
+                indices.push_back(node->index);
+            }
+
+            auto& node = *iterators[N - 1];
+            return std::pair<std::list<size_t>, T>{indices, *(node->value)};
+        }
 
     private:
         IndexNodeIterator iterators[N];
+        std::list<IndexNodePtr<T>>* rootContainer;
     };
 
     Iterator begin()
     {
-        return Iterator(root->begin(), true);
+        return Iterator(root, true);
     }
 
     Iterator end()
     {
-        return Iterator(root->end(), false);
+        return Iterator(root, false);
     }
 
 private:
