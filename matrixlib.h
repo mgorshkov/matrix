@@ -4,28 +4,36 @@
 #include <utility>
 #include <algorithm>
 #include <assert.h>
+#include <memory>
 
-template <typename T>
+template <typename T, T Default>
 struct IndexNode
 {
+    IndexNode(size_t index_)
+        : index(index_)
+        , children(std::make_shared<std::list<std::shared_ptr<IndexNode>>>())
+        , value(std::make_unique<T>(Default))
+    {
+    }
+
     size_t index;
-    std::list<IndexNode*> children;
-    T* value;
+    std::shared_ptr<std::list<std::shared_ptr<IndexNode>>> children;
+    std::unique_ptr<T> value;
 };
 
-template <typename T>
-using IndexNodePtr = IndexNode<T>*;
+template <typename T, T Default>
+using IndexNodePtr = std::shared_ptr<IndexNode<T, Default>>;
 
 template <typename T, size_t N, T Default>
 class Matrix
 {
 public:
     Matrix()
-        : root(new std::list<IndexNodePtr<T>>())
+        : root(std::make_shared<std::list<IndexNodePtr<T, Default>>>())
     {
     }
 
-    Matrix(std::list<IndexNodePtr<T>>* root_)
+    Matrix(std::shared_ptr<std::list<IndexNodePtr<T, Default>>> root_)
         : root(root_)
     {
     }
@@ -35,7 +43,7 @@ public:
         size_t s = 0;
         for (auto index : *root)
         {
-            s += Matrix<T, N - 1, Default>(&index->children).size();
+            s += Matrix<T, N - 1, Default>(index->children).size();
         }
         return s;
     }
@@ -49,19 +57,19 @@ public:
             });
 
         if (it != root->end())
-            return Matrix<T, N - 1, Default>(&(*it)->children);
+            return Matrix<T, N - 1, Default>((*it)->children);
 
-        auto node = new IndexNode<T>{index, {}, new T(Default)};
-        root->push_back(node);
-        return Matrix<T, N - 1, Default>(&node->children);
+        auto node = std::make_shared<IndexNode<T, Default>>(index);
+        root->emplace_back(node);
+        return Matrix<T, N - 1, Default>(node->children);
     }
 
     class Iterator
     {
     public:
-        using IndexNodeIterator = typename std::list<IndexNodePtr<T>>::iterator;
+        using IndexNodeIterator = typename std::list<IndexNodePtr<T, Default>>::iterator;
 
-        Iterator(std::list<IndexNodePtr<T>>* rootContainer_, bool isBegin)
+        Iterator(std::shared_ptr<std::list<IndexNodePtr<T, Default>>> rootContainer_, bool isBegin)
             : rootContainer(rootContainer_)
         {
             if (isBegin)
@@ -71,19 +79,19 @@ public:
                 for (size_t i = 1; i < N; ++i)
                 {
                     auto& node = *iterators[i - 1];
-                    auto& container = node->children;
-                    iterators[i] = container.begin();
+                    auto container = node->children;
+                    iterators[i] = container->begin();
                 }
             }
             else
             {
                 iterators[0] = rootContainer->end();
-                auto& node = *std::prev(iterators[0]);
+                auto node = *std::prev(iterators[0]);
 
                 for (size_t i = 1; i < N; ++i)
                 {
-                    auto& container = node->children;
-                    iterators[i] = container.end();
+                    auto container = node->children;
+                    iterators[i] = container->end();
                     node = *std::prev(iterators[i]);
                 }
             }
@@ -93,6 +101,23 @@ public:
         {
             assert (iterators[0] != rootContainer->end());
 
+            auto& node = *iterators[0];
+            auto container = node->children;
+            //while (*(*iterators[1])->value == Default)
+
+            if (++iterators[1] == container->end())
+            {
+                if (++iterators[0] != rootContainer->end())
+                {
+                    auto& node = *iterators[0];
+                    auto container = node->children;
+                    iterators[1] = container->begin();
+                    {
+                        ++iterators[1];
+                    }
+                }
+            }
+/*
             for (size_t i = N; i--; )
             {
                 std::list<IndexNodePtr<T>>* container;
@@ -104,8 +129,19 @@ public:
                     container = &node->children;
                 }
                 if (++iterators[i] == container->end())
-                    ++iterators[i - 1];
+                {
+                    // invalidate successive iterators
+                    for (size_t j = i + 1; j < N; ++j)
+                    {
+                        auto node = *iterators[j];
+                        auto& container = node->children;
+                        iterators[j] = container.begin();
+                    }
+                }
+                else
+                    break;
             }
+*/
             return *this;
         }
 
@@ -124,11 +160,11 @@ public:
             assert (iterators[0] != rootContainer->end());
 
             std::list<size_t> indices;
-            IndexNodePtr<T> node;
+            IndexNodePtr<T, Default> node;
             for (size_t i = 0; i < N; ++i)
             {
                 node = *iterators[i];
-                indices.push_back(node->index);
+                indices.emplace_back(node->index);
             }
 
             return std::pair<std::list<size_t>, T>{indices, *(node->value)};
@@ -136,7 +172,7 @@ public:
 
     private:
         IndexNodeIterator iterators[N];
-        std::list<IndexNodePtr<T>>* rootContainer;
+        std::shared_ptr<std::list<IndexNodePtr<T, Default>>> rootContainer;
     };
 
     Iterator begin()
@@ -150,9 +186,7 @@ public:
     }
 
 private:
-    std::list<IndexNodePtr<T>>* root;
-
-    const static T DefaultValue = Default;
+    std::shared_ptr<std::list<IndexNodePtr<T, Default>>> root;
 };
 
 template <typename T, T Default>
@@ -160,11 +194,11 @@ class Matrix<T, 1, Default>
 {
 public:
     Matrix()
-        : root(new std::list<IndexNodePtr<T>>)
+        : root(std::make_shared<std::list<IndexNodePtr<T, Default>>>())
     {
     }
 
-    Matrix(std::list<IndexNodePtr<T>>* root_)
+    Matrix(std::shared_ptr<std::list<IndexNodePtr<T, Default>>> root_)
         : root(root_)
     {
     }
@@ -187,12 +221,12 @@ public:
             });
         if (it != root->end())
             return *(*it)->value;
-        auto node = new IndexNode<T>{index, {}, new T(Default)};
-        root->push_back(node);
+        auto node = std::make_shared<IndexNode<T, Default>>(index);
+        root->emplace_back(node);
         return *node->value;
     }
 
-    using IndexNodeIterator = typename std::list<IndexNodePtr<T>>::iterator;
+    using IndexNodeIterator = typename std::list<IndexNodePtr<T, Default>>::iterator;
     IndexNodeIterator begin()
     {
         return root->begin();
@@ -204,9 +238,7 @@ public:
     }
 
 private:
-    std::list<IndexNodePtr<T>>* root;
-
-    const static T DefaultValue = Default;
+    std::shared_ptr<std::list<IndexNodePtr<T, Default>>> root;
 };
 
 int version();

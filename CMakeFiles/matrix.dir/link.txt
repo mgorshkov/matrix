@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++1z  -rdynamic CMakeFiles/matrix.dir/matrix.cpp.o  -o matrix libmatrixlib.a 

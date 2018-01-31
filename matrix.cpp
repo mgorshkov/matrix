@@ -7,11 +7,9 @@ int main(int, char const **)
 {
     try
     {
-        Matrix<int, 2, -1> matrix;
+        Matrix<int, 2, 0> matrix;
 
-        matrix[100][101] = 314;
-        matrix[102][103] = 315;
-/*        for (size_t i = 0; i < 10; ++i)
+        for (size_t i = 0; i < 10; ++i)
         {
             matrix[i][i] = i;
             matrix[i][9 - i] = 9 - i;
@@ -23,15 +21,15 @@ int main(int, char const **)
                 std::cout << matrix[i][j] << ' ';
             }
             std::cout << std::endl;
-        }*/
+        }
         std::cout << "Occupied: " << matrix.size() << std::endl;
-/*        for (auto occupied : matrix)
+        for (auto occupied : matrix)
         {
             for (auto index : occupied.first)
                 std::cout << index << ' ';
-            std::cout << *occupied.second << std::endl;
-        }*/
-
+            std::cout << occupied.second << std::endl;
+        }
+/*
         int loops = 0;
         for (auto c: matrix)
         {
@@ -49,8 +47,8 @@ int main(int, char const **)
             }
             ++loops;
         }
-        assert(loops == 2);
-
+        //assert(loops == 2);
+*/
     }
     catch (const std::exception &e)
     {
