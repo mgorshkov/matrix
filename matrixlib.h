@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <assert.h>
 #include <memory>
+#include <iostream>
 
 template <typename T, T Default>
 struct IndexNode
@@ -14,6 +15,11 @@ struct IndexNode
         , children(std::make_shared<std::list<std::shared_ptr<IndexNode>>>())
         , value(std::make_unique<T>(Default))
     {
+    }
+
+    bool IsDefault() const
+    {
+        return value && *value == Default;
     }
 
     size_t index;
@@ -81,6 +87,7 @@ public:
                     auto& node = *iterators[i - 1];
                     auto container = node->children;
                     iterators[i] = container->begin();
+                    CheckIterator(i);
                 }
             }
             else
@@ -97,47 +104,66 @@ public:
             }
         }
 
-        Iterator& operator ++ ()
+        void CheckIterator(size_t i)
         {
-            assert (iterators[0] != rootContainer->end());
+//            if (iterators[i] == container->end())
 
             auto& node = *iterators[0];
             auto container = node->children;
-            //while (*(*iterators[1])->value == Default)
+            while (iterators[1] != container->end() && (*iterators[1])->IsDefault())
+                ++iterators[1];
 
-            if (++iterators[1] == container->end())
+            if (iterators[1] == container->end())
             {
                 if (++iterators[0] != rootContainer->end())
                 {
                     auto& node = *iterators[0];
                     auto container = node->children;
                     iterators[1] = container->begin();
+                    while (iterators[1] != container->end() && (*iterators[1])->IsDefault())
                     {
                         ++iterators[1];
                     }
                 }
             }
+        }
+
+        Iterator& operator ++ ()
+        {
+            assert (iterators[0] != rootContainer->end());
+            
+            ++iterators[N - 1];
+            CheckIterator(N - 1);
+
 /*
             for (size_t i = N; i--; )
             {
-                std::list<IndexNodePtr<T>>* container;
+                std::shared_ptr<std::list<IndexNodePtr<T, Default>>> container;
                 if (i == 0)
                     container = rootContainer;
                 else
                 {
                     auto& node = *iterators[i - 1];
-                    container = &node->children;
+                    container = node->children;
                 }
-                if (++iterators[i] == container->end())
+                do
                 {
+                    ++iterators[i];
                     // invalidate successive iterators
                     for (size_t j = i + 1; j < N; ++j)
                     {
-                        auto node = *iterators[j];
-                        auto& container = node->children;
-                        iterators[j] = container.begin();
+                        auto& node = *iterators[j - 1];
+                        auto container = node->children;
+                        iterators[j] = container->begin();
+                        while (iterators[j] != container->end() && (*iterators[j])->IsDefault())
+                        {
+                            ++iterators[j];
+                        }                            
                     }
                 }
+                while (iterators[i] != container->end() && (*iterators[i])->IsDefault());
+                if (iterators[i] == container->end())
+                    continue;
                 else
                     break;
             }
