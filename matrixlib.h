@@ -106,23 +106,27 @@ public:
 
         void CheckIterator(size_t i)
         {
-//            if (iterators[i] == container->end())
-
-            auto& node = *iterators[0];
-            auto container = node->children;
-            while (iterators[1] != container->end() && (*iterators[1])->IsDefault())
-                ++iterators[1];
-
-            if (iterators[1] == container->end())
+            std::shared_ptr<std::list<IndexNodePtr<T, Default>>> container;
+            if (i == 0)
+                container = rootContainer;
+            else
             {
-                if (++iterators[0] != rootContainer->end())
+                auto& node = *iterators[i - 1];
+                container = node->children;
+            }
+            while (iterators[i] != container->end() && (*iterators[i])->IsDefault())
+                ++iterators[i];
+
+            if (iterators[i] == container->end())
+            {
+                if (i > 0 && ++iterators[i - 1] != rootContainer->end())
                 {
-                    auto& node = *iterators[0];
+                    auto& node = *iterators[i - 1];
                     auto container = node->children;
-                    iterators[1] = container->begin();
-                    while (iterators[1] != container->end() && (*iterators[1])->IsDefault())
+                    iterators[i] = container->begin();
+                    while (iterators[i] != container->end() && (*iterators[i])->IsDefault())
                     {
-                        ++iterators[1];
+                        ++iterators[i];
                     }
                 }
             }
@@ -131,43 +135,10 @@ public:
         Iterator& operator ++ ()
         {
             assert (iterators[0] != rootContainer->end());
-            
+
             ++iterators[N - 1];
             CheckIterator(N - 1);
 
-/*
-            for (size_t i = N; i--; )
-            {
-                std::shared_ptr<std::list<IndexNodePtr<T, Default>>> container;
-                if (i == 0)
-                    container = rootContainer;
-                else
-                {
-                    auto& node = *iterators[i - 1];
-                    container = node->children;
-                }
-                do
-                {
-                    ++iterators[i];
-                    // invalidate successive iterators
-                    for (size_t j = i + 1; j < N; ++j)
-                    {
-                        auto& node = *iterators[j - 1];
-                        auto container = node->children;
-                        iterators[j] = container->begin();
-                        while (iterators[j] != container->end() && (*iterators[j])->IsDefault())
-                        {
-                            ++iterators[j];
-                        }                            
-                    }
-                }
-                while (iterators[i] != container->end() && (*iterators[i])->IsDefault());
-                if (iterators[i] == container->end())
-                    continue;
-                else
-                    break;
-            }
-*/
             return *this;
         }
 
