@@ -1,8 +1,10 @@
 #include <iostream>
-#include <tuple>
 
 #include "matrixlib.h"
 
+/**
+ * @brief Main file for N-dimensional matrix library tests.
+ */
 int main(int, char const **)
 {
     try

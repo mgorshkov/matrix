@@ -8,7 +8,7 @@
 #include <iostream>
 
 /**
- * @brief N-dimensional matrix.
+ * @brief N-dimensional matrix library.
  */
 template <typename T, size_t N, T Default>
 struct IndexNode;
@@ -113,8 +113,6 @@ struct IndexNode<T, 0, Default> : IExtraNodeDeleter
 #ifdef DEBUG_PRINT
         std::cout << "T()" << std::endl;
 #endif
-        if (IsDefault())
-            mParentExtraNodeDeleter->DeleteNode(this);
         return mValue[0];
     }
 

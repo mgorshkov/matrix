@@ -4,6 +4,8 @@ find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 configure_file(version.h.in version.h)
 
+set(DEBUG_PRINT "0")
+
 if (DEBUG_PRINT)
 	message("DEBUG_PRINT is activated!")
 	add_definitions(-DDEBUG_PRINT)
