@@ -61,6 +61,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -81,17 +82,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">IndexNode&lt; T, Default &gt; Member List</div>  </div>
+<div class="title">IndexNode&lt; T, N, Default &gt; Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="structIndexNode.html">IndexNode&lt; T, Default &gt;</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="structIndexNode.html">IndexNode&lt; T, N, Default &gt;</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="structIndexNode.html#a547f4afcbf0d4a963ba0f768de342bb0">children</a></td><td class="entry"><a class="el" href="structIndexNode.html">IndexNode&lt; T, Default &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="structIndexNode.html#a6f8a6ff5c3f2b4db7b60dc8b759f68a1">index</a></td><td class="entry"><a class="el" href="structIndexNode.html">IndexNode&lt; T, Default &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="structIndexNode.html#a9f96f59f128fda85b6ac734f68571852">IndexNode</a>(size_t index_)</td><td class="entry"><a class="el" href="structIndexNode.html">IndexNode&lt; T, Default &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="structIndexNode.html#af771d84244ba540623a7ba5bf1260bed">IsDefault</a>() const </td><td class="entry"><a class="el" href="structIndexNode.html">IndexNode&lt; T, Default &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="structIndexNode.html#a9f75a5f9c73ba39d331b82364a20f82a">value</a></td><td class="entry"><a class="el" href="structIndexNode.html">IndexNode&lt; T, Default &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structIndexNode.html#adca6b1b25b0c943e45c576374be3109b">DeleteNode</a>(void *node) override</td><td class="entry"><a class="el" href="structIndexNode.html">IndexNode&lt; T, N, Default &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="structIndexNode.html#a6c752ebfb61ee4f8258a73a2cc3b419e">IndexNode</a>(IExtraNodeDeleter *parentExtraNodeDeleter, size_t index)</td><td class="entry"><a class="el" href="structIndexNode.html">IndexNode&lt; T, N, Default &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structIndexNode.html#af4c4cadcc81feb18bfbe396be03f6998">mChildren</a></td><td class="entry"><a class="el" href="structIndexNode.html">IndexNode&lt; T, N, Default &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="structIndexNode.html#a472170a89d0eee2b050a87e23ecfac67">mIndex</a></td><td class="entry"><a class="el" href="structIndexNode.html">IndexNode&lt; T, N, Default &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structIndexNode.html#a180311970d813f25751abf9c85369688">mParentExtraNodeDeleter</a></td><td class="entry"><a class="el" href="structIndexNode.html">IndexNode&lt; T, N, Default &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="structIndexNode.html#af8069740a163a3b0faef9ed3aed17bce">operator[]</a>(size_t index) const </td><td class="entry"><a class="el" href="structIndexNode.html">IndexNode&lt; T, N, Default &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="structIndexNode.html#a1f240419f81b85584f60e99a6c0f4be4">operator[]</a>(size_t index)</td><td class="entry"><a class="el" href="structIndexNode.html">IndexNode&lt; T, N, Default &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="structIExtraNodeDeleter.html#a698b6e020e78dc2d10d9ef5904d735c9">~IExtraNodeDeleter</a>()</td><td class="entry"><a class="el" href="structIExtraNodeDeleter.html">IExtraNodeDeleter</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

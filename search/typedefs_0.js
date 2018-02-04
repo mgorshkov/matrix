@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['indexnodeiterator',['IndexNodeIterator',['../classMatrix_1_1Iterator.html#a7df25f4b51c2659d82a87ba749dd6d59',1,'Matrix::Iterator::IndexNodeIterator()'],['../classMatrix_3_01T_00_011_00_01Default_01_4.html#af1d428e3219ec19b089d7353af029297',1,'Matrix&lt; T, 1, Default &gt;::IndexNodeIterator()']]],
-  ['indexnodeptr',['IndexNodePtr',['../matrixlib_8h.html#ab2f1f43ce93b7461b1a375d4fa29d226',1,'matrixlib.h']]]
+  ['indexnodeinternaliterator',['IndexNodeInternalIterator',['../matrixlib_8h.html#afd1e74c46ce91640b5146c102219ed01',1,'matrixlib.h']]],
+  ['indexnodeptr',['IndexNodePtr',['../matrixlib_8h.html#a70490775f0d497eae52c090f7aab3272',1,'matrixlib.h']]],
+  ['indexnodeptrcontainer',['IndexNodePtrContainer',['../matrixlib_8h.html#a14f0c3e09f71f6a32cde390b63723a3d',1,'matrixlib.h']]],
+  ['indexnodeptrcontainerptr',['IndexNodePtrContainerPtr',['../matrixlib_8h.html#abd36ffbbecc585cc6af4486aee4376d6',1,'matrixlib.h']]]
 ];

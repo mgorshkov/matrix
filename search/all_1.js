@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['checkiterator',['CheckIterator',['../classMatrix_1_1Iterator.html#a95501e2213c7ab2d629b6c065885f449',1,'Matrix::Iterator']]],
-  ['children',['children',['../structIndexNode.html#a547f4afcbf0d4a963ba0f768de342bb0',1,'IndexNode']]]
+  ['deletenode',['DeleteNode',['../structIExtraNodeDeleter.html#ab9b2788fdd167d0f3cc7a1c02d2ddad1',1,'IExtraNodeDeleter::DeleteNode()'],['../structIndexNode.html#adca6b1b25b0c943e45c576374be3109b',1,'IndexNode::DeleteNode()']]]
 ];

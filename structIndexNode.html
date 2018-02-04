@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>print_ip: IndexNode&lt; T, Default &gt; Struct Template Reference</title>
+<title>print_ip: IndexNode&lt; T, N, Default &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,6 +61,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -85,45 +86,85 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structIndexNode-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">IndexNode&lt; T, Default &gt; Struct Template Reference</div>  </div>
+<div class="title">IndexNode&lt; T, N, Default &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
+<p>N-dimensional matrix library.  
+ <a href="structIndexNode.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="matrixlib_8h_source.html">matrixlib.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for IndexNode&lt; T, N, Default &gt;:</div>
+<div class="dyncontent">
+<div class="center"><img src="structIndexNode__inherit__graph.png" border="0" usemap="#IndexNode_3_01T_00_01N_00_01Default_01_4_inherit__map" alt="Inheritance graph"/></div>
+<map name="IndexNode_3_01T_00_01N_00_01Default_01_4_inherit__map" id="IndexNode_3_01T_00_01N_00_01Default_01_4_inherit__map">
+<area shape="rect" id="node2" href="structIExtraNodeDeleter.html" title="IExtraNodeDeleter" alt="" coords="32,5,161,32"/></map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
+Collaboration diagram for IndexNode&lt; T, N, Default &gt;:</div>
+<div class="dyncontent">
+<div class="center"><img src="structIndexNode__coll__graph.png" border="0" usemap="#IndexNode_3_01T_00_01N_00_01Default_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="IndexNode_3_01T_00_01N_00_01Default_01_4_coll__map" id="IndexNode_3_01T_00_01N_00_01Default_01_4_coll__map">
+<area shape="rect" id="node2" href="structIExtraNodeDeleter.html" title="IExtraNodeDeleter" alt="" coords="32,5,161,32"/></map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9f96f59f128fda85b6ac734f68571852"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIndexNode.html#a9f96f59f128fda85b6ac734f68571852">IndexNode</a> (size_t index_)</td></tr>
-<tr class="separator:a9f96f59f128fda85b6ac734f68571852"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af771d84244ba540623a7ba5bf1260bed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIndexNode.html#af771d84244ba540623a7ba5bf1260bed">IsDefault</a> () const </td></tr>
-<tr class="separator:af771d84244ba540623a7ba5bf1260bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c752ebfb61ee4f8258a73a2cc3b419e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIndexNode.html#a6c752ebfb61ee4f8258a73a2cc3b419e">IndexNode</a> (<a class="el" href="structIExtraNodeDeleter.html">IExtraNodeDeleter</a> *parentExtraNodeDeleter, size_t index)</td></tr>
+<tr class="separator:a6c752ebfb61ee4f8258a73a2cc3b419e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8069740a163a3b0faef9ed3aed17bce"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structIndexNode.html">IndexNode</a>&lt; T, N-1, <br class="typebreak"/>
+Default &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIndexNode.html#af8069740a163a3b0faef9ed3aed17bce">operator[]</a> (size_t index) const </td></tr>
+<tr class="separator:af8069740a163a3b0faef9ed3aed17bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f240419f81b85584f60e99a6c0f4be4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIndexNode.html">IndexNode</a>&lt; T, N-1, Default &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIndexNode.html#a1f240419f81b85584f60e99a6c0f4be4">operator[]</a> (size_t index)</td></tr>
+<tr class="separator:a1f240419f81b85584f60e99a6c0f4be4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adca6b1b25b0c943e45c576374be3109b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIndexNode.html#adca6b1b25b0c943e45c576374be3109b">DeleteNode</a> (void *node) override</td></tr>
+<tr class="separator:adca6b1b25b0c943e45c576374be3109b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_structIExtraNodeDeleter"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_structIExtraNodeDeleter')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="structIExtraNodeDeleter.html">IExtraNodeDeleter</a></td></tr>
+<tr class="memitem:a698b6e020e78dc2d10d9ef5904d735c9 inherit pub_methods_structIExtraNodeDeleter"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIExtraNodeDeleter.html#a698b6e020e78dc2d10d9ef5904d735c9">~IExtraNodeDeleter</a> ()</td></tr>
+<tr class="separator:a698b6e020e78dc2d10d9ef5904d735c9 inherit pub_methods_structIExtraNodeDeleter"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a6f8a6ff5c3f2b4db7b60dc8b759f68a1"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIndexNode.html#a6f8a6ff5c3f2b4db7b60dc8b759f68a1">index</a></td></tr>
-<tr class="separator:a6f8a6ff5c3f2b4db7b60dc8b759f68a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a547f4afcbf0d4a963ba0f768de342bb0"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; std::list<br class="typebreak"/>
-&lt; std::shared_ptr&lt; <a class="el" href="structIndexNode.html">IndexNode</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIndexNode.html#a547f4afcbf0d4a963ba0f768de342bb0">children</a></td></tr>
-<tr class="separator:a547f4afcbf0d4a963ba0f768de342bb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f75a5f9c73ba39d331b82364a20f82a"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIndexNode.html#a9f75a5f9c73ba39d331b82364a20f82a">value</a></td></tr>
-<tr class="separator:a9f75a5f9c73ba39d331b82364a20f82a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a180311970d813f25751abf9c85369688"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIExtraNodeDeleter.html">IExtraNodeDeleter</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIndexNode.html#a180311970d813f25751abf9c85369688">mParentExtraNodeDeleter</a></td></tr>
+<tr class="separator:a180311970d813f25751abf9c85369688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a472170a89d0eee2b050a87e23ecfac67"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIndexNode.html#a472170a89d0eee2b050a87e23ecfac67">mIndex</a></td></tr>
+<tr class="separator:a472170a89d0eee2b050a87e23ecfac67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4c4cadcc81feb18bfbe396be03f6998"><td class="memItemLeft" align="right" valign="top"><a class="el" href="matrixlib_8h.html#abd36ffbbecc585cc6af4486aee4376d6">IndexNodePtrContainerPtr</a>&lt; T, N-1, <br class="typebreak"/>
+Default &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIndexNode.html#af4c4cadcc81feb18bfbe396be03f6998">mChildren</a></td></tr>
+<tr class="separator:af4c4cadcc81feb18bfbe396be03f6998"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a9f96f59f128fda85b6ac734f68571852"></a>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename T, size_t N, T Default&gt;<br/>
+struct IndexNode&lt; T, N, Default &gt;</h3>
+
+<p>N-dimensional matrix library. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a6c752ebfb61ee4f8258a73a2cc3b419e"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , T Default&gt; </div>
+template&lt;typename T , size_t N, T Default&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structIndexNode.html">IndexNode</a>&lt; T, Default &gt;::<a class="el" href="structIndexNode.html">IndexNode</a> </td>
+          <td class="memname"><a class="el" href="structIndexNode.html">IndexNode</a>&lt; T, N, Default &gt;::<a class="el" href="structIndexNode.html">IndexNode</a> </td>
           <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>index_</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structIExtraNodeDeleter.html">IExtraNodeDeleter</a> *&#160;</td>
+          <td class="paramname"><em>parentExtraNodeDeleter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -136,19 +177,48 @@ template&lt;typename T , T Default&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="af771d84244ba540623a7ba5bf1260bed"></a>
+<a class="anchor" id="adca6b1b25b0c943e45c576374be3109b"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , T Default&gt; </div>
+template&lt;typename T , size_t N, T Default&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="structIndexNode.html">IndexNode</a>&lt; T, Default &gt;::IsDefault </td>
+          <td class="memname">void <a class="el" href="structIndexNode.html">IndexNode</a>&lt; T, N, Default &gt;::DeleteNode </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="structIExtraNodeDeleter.html#ab9b2788fdd167d0f3cc7a1c02d2ddad1">IExtraNodeDeleter</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af8069740a163a3b0faef9ed3aed17bce"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t N, T Default&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structIndexNode.html">IndexNode</a>&lt;T, N - 1, Default&gt;&amp; <a class="el" href="structIndexNode.html">IndexNode</a>&lt; T, N, Default &gt;::operator[] </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -161,43 +231,69 @@ template&lt;typename T , T Default&gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a1f240419f81b85584f60e99a6c0f4be4"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t N, T Default&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structIndexNode.html">IndexNode</a>&lt;T, N - 1, Default&gt;&amp; <a class="el" href="structIndexNode.html">IndexNode</a>&lt; T, N, Default &gt;::operator[] </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a547f4afcbf0d4a963ba0f768de342bb0"></a>
+<a class="anchor" id="af4c4cadcc81feb18bfbe396be03f6998"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , T Default&gt; </div>
+template&lt;typename T , size_t N, T Default&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;std::list&lt;std::shared_ptr&lt;<a class="el" href="structIndexNode.html">IndexNode</a>&gt; &gt; &gt; <a class="el" href="structIndexNode.html">IndexNode</a>&lt; T, Default &gt;::children</td>
+          <td class="memname"><a class="el" href="matrixlib_8h.html#abd36ffbbecc585cc6af4486aee4376d6">IndexNodePtrContainerPtr</a>&lt;T, N - 1, Default&gt; <a class="el" href="structIndexNode.html">IndexNode</a>&lt; T, N, Default &gt;::mChildren</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6f8a6ff5c3f2b4db7b60dc8b759f68a1"></a>
+<a class="anchor" id="a472170a89d0eee2b050a87e23ecfac67"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , T Default&gt; </div>
+template&lt;typename T , size_t N, T Default&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">size_t <a class="el" href="structIndexNode.html">IndexNode</a>&lt; T, Default &gt;::index</td>
+          <td class="memname">size_t <a class="el" href="structIndexNode.html">IndexNode</a>&lt; T, N, Default &gt;::mIndex</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a9f75a5f9c73ba39d331b82364a20f82a"></a>
+<a class="anchor" id="a180311970d813f25751abf9c85369688"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , T Default&gt; </div>
+template&lt;typename T , size_t N, T Default&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt;T&gt; <a class="el" href="structIndexNode.html">IndexNode</a>&lt; T, Default &gt;::value</td>
+          <td class="memname"><a class="el" href="structIExtraNodeDeleter.html">IExtraNodeDeleter</a>* <a class="el" href="structIndexNode.html">IndexNode</a>&lt; T, N, Default &gt;::mParentExtraNodeDeleter</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -1,10 +1,12 @@
 var searchData=
 [
-  ['index',['index',['../structIndexNode.html#a6f8a6ff5c3f2b4db7b60dc8b759f68a1',1,'IndexNode']]],
-  ['indexnode',['IndexNode',['../structIndexNode.html',1,'IndexNode&lt; T, Default &gt;'],['../structIndexNode.html#a9f96f59f128fda85b6ac734f68571852',1,'IndexNode::IndexNode()']]],
-  ['indexnodeiterator',['IndexNodeIterator',['../classMatrix_1_1Iterator.html#a7df25f4b51c2659d82a87ba749dd6d59',1,'Matrix::Iterator::IndexNodeIterator()'],['../classMatrix_3_01T_00_011_00_01Default_01_4.html#af1d428e3219ec19b089d7353af029297',1,'Matrix&lt; T, 1, Default &gt;::IndexNodeIterator()']]],
-  ['indexnodeptr',['IndexNodePtr',['../matrixlib_8h.html#ab2f1f43ce93b7461b1a375d4fa29d226',1,'matrixlib.h']]],
-  ['isdefault',['IsDefault',['../structIndexNode.html#af771d84244ba540623a7ba5bf1260bed',1,'IndexNode']]],
-  ['iterator',['Iterator',['../classMatrix_1_1Iterator.html#a5781666607e274d25d74d0f90accfd9d',1,'Matrix::Iterator']]],
-  ['iterator',['Iterator',['../classMatrix_1_1Iterator.html',1,'Matrix']]]
+  ['iextranodedeleter',['IExtraNodeDeleter',['../structIExtraNodeDeleter.html',1,'']]],
+  ['indexnode',['IndexNode',['../structIndexNode.html',1,'IndexNode&lt; T, N, Default &gt;'],['../structIndexNode.html#a6c752ebfb61ee4f8258a73a2cc3b419e',1,'IndexNode::IndexNode()'],['../structIndexNode_3_01T_00_010_00_01Default_01_4.html#a10f42874dee9c01a72e6d5aeb8118406',1,'IndexNode&lt; T, 0, Default &gt;::IndexNode()']]],
+  ['indexnode_3c_20t_2c_200_2c_20default_20_3e',['IndexNode&lt; T, 0, Default &gt;',['../structIndexNode_3_01T_00_010_00_01Default_01_4.html',1,'']]],
+  ['indexnodeinternaliterator',['IndexNodeInternalIterator',['../matrixlib_8h.html#afd1e74c46ce91640b5146c102219ed01',1,'matrixlib.h']]],
+  ['indexnodeiterator',['IndexNodeIterator',['../classIndexNodeIterator.html',1,'IndexNodeIterator&lt; T, N, Default &gt;'],['../classIndexNodeIterator.html#a90574db211936d51e15167056ba22e87',1,'IndexNodeIterator::IndexNodeIterator(IndexNodePtr&lt; T, N, Default &gt; rootContainer, bool isBegin)'],['../classIndexNodeIterator.html#acb5367b6f4eb4cef372ec71991f4e2a5',1,'IndexNodeIterator::IndexNodeIterator(const IndexNodeIterator &amp;other)'],['../classIndexNodeIterator_3_01T_00_010_00_01Default_01_4.html#abe2b66d3d6418e03784adacf45d40a82',1,'IndexNodeIterator&lt; T, 0, Default &gt;::IndexNodeIterator(IndexNodePtr&lt; T, 0, Default &gt; &amp;rootContainer, bool isBegin)'],['../classIndexNodeIterator_3_01T_00_010_00_01Default_01_4.html#a113ae1d8c1eb8dab838b34ef1e8b5ecf',1,'IndexNodeIterator&lt; T, 0, Default &gt;::IndexNodeIterator(const IndexNodeIterator &amp;other)']]],
+  ['indexnodeiterator_3c_20t_2c_200_2c_20default_20_3e',['IndexNodeIterator&lt; T, 0, Default &gt;',['../classIndexNodeIterator_3_01T_00_010_00_01Default_01_4.html',1,'']]],
+  ['indexnodeptr',['IndexNodePtr',['../matrixlib_8h.html#a70490775f0d497eae52c090f7aab3272',1,'matrixlib.h']]],
+  ['indexnodeptrcontainer',['IndexNodePtrContainer',['../matrixlib_8h.html#a14f0c3e09f71f6a32cde390b63723a3d',1,'matrixlib.h']]],
+  ['indexnodeptrcontainerptr',['IndexNodePtrContainerPtr',['../matrixlib_8h.html#abd36ffbbecc585cc6af4486aee4376d6',1,'matrixlib.h']]]
 ];
