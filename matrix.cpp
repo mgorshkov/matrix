@@ -29,26 +29,6 @@ int main(int, char const **)
                 std::cout << index << ' ';
             std::cout << occupied.second << std::endl;
         }
-/*
-        int loops = 0;
-        for (auto c: matrix)
-        {
-            if (loops == 0)
-            {
-                std::list<size_t> l{100, 101};
-                assert(c.first == l);
-                assert(c.second == 314);
-            }
-            else if (loops == 1)
-            {
-                std::list<size_t> l{102, 103};
-                assert(c.first == l);
-                assert(c.second == 315);
-            }
-            ++loops;
-        }
-        //assert(loops == 2);
-*/
     }
     catch (const std::exception &e)
     {

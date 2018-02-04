@@ -37,13 +37,13 @@ BOOST_AUTO_TEST_CASE(test_iterator)
     {
         if (loops == 0)
         {
-            std::list<size_t> l{100, 101};
+            std::vector<size_t> l{100, 101};
             BOOST_CHECK(c.first == l);
             BOOST_CHECK_EQUAL(c.second, 314);
         }
         else if (loops == 1)
         {
-            std::list<size_t> l{102, 103};
+            std::vector<size_t> l{102, 103};
             BOOST_CHECK(c.first == l);
             BOOST_CHECK_EQUAL(c.second, 315);
         }
@@ -65,14 +65,41 @@ BOOST_AUTO_TEST_CASE(test_1_dimension_matrix)
     for (auto occupied : matrix)
     {
         if (loops == 0)
-            BOOST_CHECK_EQUAL(*occupied->value, 1000);
+            BOOST_CHECK_EQUAL(occupied.second, 1000);
         else if (loops == 1)
-            BOOST_CHECK_EQUAL(*occupied->value, 1001);
+            BOOST_CHECK_EQUAL(occupied.second, 1001);
         else if (loops == 2)
-            BOOST_CHECK_EQUAL(*occupied->value, 0);
+            BOOST_CHECK_EQUAL(occupied.second, 0);
         ++loops;
     }
     BOOST_CHECK_EQUAL(loops, 3);
+}
+
+BOOST_AUTO_TEST_CASE(test_3_dimensions_matrix)
+{
+    Matrix<int, 3, -1> matrix;
+
+    matrix[100][101][102] = 314;
+    matrix[103][104][105] = 315;
+
+    int loops = 0;
+    for (auto c: matrix)
+    {
+        if (loops == 0)
+        {
+            std::vector<size_t> l{100, 101, 102};
+            BOOST_CHECK(c.first == l);
+            BOOST_CHECK_EQUAL(c.second, 314);
+        }
+        else if (loops == 1)
+        {
+            std::vector<size_t> l{103, 104, 105};
+            BOOST_CHECK(c.first == l);
+            BOOST_CHECK_EQUAL(c.second, 315);
+        }
+        ++loops;
+    }
+    BOOST_CHECK_EQUAL(loops, 2);
 }
 
 }
