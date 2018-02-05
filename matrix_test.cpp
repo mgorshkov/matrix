@@ -55,9 +55,8 @@ BOOST_AUTO_TEST_CASE(test_iterator)
     BOOST_CHECK_EQUAL(loops, 2);
 }
 
-BOOST_AUTO_TEST_CASE(test_1_dimension_matrix)
+BOOST_AUTO_TEST_CASE(test_1_dimensional_matrix)
 {
-    /*
     Matrix<int, 1, 0> matrix;
     matrix[0] = 1000;
     matrix[1] = 1001;
@@ -74,10 +73,10 @@ BOOST_AUTO_TEST_CASE(test_1_dimension_matrix)
             BOOST_CHECK_EQUAL(occupied.second, 1001);
         ++loops;
     }
-    BOOST_CHECK_EQUAL(loops, 2);*/
+    BOOST_CHECK_EQUAL(loops, 2);
 }
 
-BOOST_AUTO_TEST_CASE(test_3_dimensions_matrix)
+BOOST_AUTO_TEST_CASE(test_3_dimensional_matrix)
 {
     Matrix<int, 3, -1> matrix;
 
