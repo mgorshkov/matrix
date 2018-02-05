@@ -16,6 +16,18 @@ BOOST_AUTO_TEST_CASE(test_empty)
     BOOST_CHECK_EQUAL(matrix.size(), 0);
 }
 
+BOOST_AUTO_TEST_CASE(test_get_element)
+{
+    Matrix<int, 2, -1> matrix;
+
+    auto a = matrix[0][0];
+    BOOST_CHECK_EQUAL(a, -1);
+    BOOST_CHECK_EQUAL(matrix.size(), 0);
+    matrix[100][100] = 314;
+    BOOST_CHECK_EQUAL(matrix[100][100], 314);
+    BOOST_CHECK_EQUAL(matrix.size(), 1);
+}
+
 BOOST_AUTO_TEST_CASE(test_iterator)
 {
     Matrix<int, 2, -1> matrix;
@@ -43,6 +55,28 @@ BOOST_AUTO_TEST_CASE(test_iterator)
     BOOST_CHECK_EQUAL(loops, 2);
 }
 
+BOOST_AUTO_TEST_CASE(test_1_dimension_matrix)
+{
+    /*
+    Matrix<int, 1, 0> matrix;
+    matrix[0] = 1000;
+    matrix[1] = 1001;
+    matrix[2] = 0;
+
+    BOOST_CHECK_EQUAL(matrix.size(), 2);
+
+    int loops = 0;
+    for (auto occupied : matrix)
+    {
+        if (loops == 0)
+            BOOST_CHECK_EQUAL(occupied.second, 1000);
+        else if (loops == 1)
+            BOOST_CHECK_EQUAL(occupied.second, 1001);
+        ++loops;
+    }
+    BOOST_CHECK_EQUAL(loops, 2);*/
+}
+
 BOOST_AUTO_TEST_CASE(test_3_dimensions_matrix)
 {
     Matrix<int, 3, -1> matrix;
@@ -68,6 +102,17 @@ BOOST_AUTO_TEST_CASE(test_3_dimensions_matrix)
         ++loops;
     }
     BOOST_CHECK_EQUAL(loops, 2);
+}
+
+BOOST_AUTO_TEST_CASE(test_default_value)
+{
+    Matrix<int, 2, -1> matrix;
+
+    matrix[100][101] = 314;
+    matrix[102][103] = 315;
+    matrix[104][105] = -1;
+
+    BOOST_CHECK_EQUAL(matrix[104][105], -1);
 }
 
 }

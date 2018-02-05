@@ -99,12 +99,30 @@ struct IndexNode<T, 0, Default> : IExtraNodeDeleter
     {
     }
 
+    IndexNode(IndexNode& node)
+        : mParentExtraNodeDeleter(node.mParentExtraNodeDeleter)
+        , mIndex(node.mIndex)
+        , mValue(node.mValue)
+    {
+        if (node.IsDefault())
+            mParentExtraNodeDeleter->DeleteNode(&node);
+    }
+
+    IndexNode& operator = (const IndexNode& node)
+    {
+        mParentExtraNodeDeleter = node.mParentExtraNodeDeleter;
+        mIndex = node.mIndex;
+        mValue = node.mValue;
+        if (node.IsDefault())
+            mParentExtraNodeDeleter->DeleteNode(&node);
+        return *this;
+    }
+
     IndexNode& operator = (const T& value)
     {
+        mValue[0] = value;
         if (value == Default)
             mParentExtraNodeDeleter->DeleteNode(this);
-        else
-            mValue[0] = value;
         return *this;
     }
 
