@@ -122,7 +122,10 @@ struct IndexNode<T, 0, Default> : IExtraNodeDeleter
         std::cout << "T&()" << std::endl;
 #endif
         if (IsDefault())
+        {
             mParentExtraNodeDeleter->DeleteNode(this);
+            return DefaultValue;
+        }
         return mValue[0];
     }
 
@@ -138,7 +141,12 @@ struct IndexNode<T, 0, Default> : IExtraNodeDeleter
     IExtraNodeDeleter* mParentExtraNodeDeleter;
     size_t mIndex;
     std::vector<T> mValue;
+
+    static T DefaultValue;
 };
+
+template <typename T, T Default>
+T IndexNode<T, 0, Default>::DefaultValue = Default;
 
 template <typename T, size_t N, T Default>
 class IndexNodeIterator
