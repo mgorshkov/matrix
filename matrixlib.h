@@ -72,9 +72,6 @@ struct IndexNode : IExtraNodeDeleter
 
     void DeleteNode(void* node) override
     {
-        if (!mParentExtraNodeDeleter)
-            return;
-        mParentExtraNodeDeleter->DeleteNode(this);
         auto it = std::find_if(mChildren->begin(), mChildren->end(),
             [node](auto child)
             {
@@ -82,6 +79,9 @@ struct IndexNode : IExtraNodeDeleter
             });
         assert (it != mChildren->end());
         mChildren->erase(it);
+        if (!mParentExtraNodeDeleter)
+            return;
+        mParentExtraNodeDeleter->DeleteNode(this);
     }
 
     IExtraNodeDeleter* mParentExtraNodeDeleter;

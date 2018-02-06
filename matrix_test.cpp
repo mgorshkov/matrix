@@ -114,4 +114,25 @@ BOOST_AUTO_TEST_CASE(test_default_value)
     BOOST_CHECK_EQUAL(matrix[104][105], -1);
 }
 
+BOOST_AUTO_TEST_CASE(test_diagonals)
+{
+    Matrix<int, 2, 0> matrix;
+
+    for (size_t i = 0; i < 10; ++i)
+    {
+        matrix[i][i] = i;
+        matrix[i][9 - i] = 9 - i;
+    }
+/*
+    for (size_t i = 1; i <= 8; ++i)
+    {
+        for (size_t j = 1; j <= 8; ++j)
+        {
+            (void)matrix[i][j];
+        }
+    }
+*/
+    BOOST_CHECK_EQUAL(matrix.size(), 18);
+}
+
 }
