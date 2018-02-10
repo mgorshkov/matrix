@@ -21,10 +21,11 @@ BOOST_AUTO_TEST_CASE(test_get_element)
     Matrix<int, 2, -1> matrix;
 
     auto a = matrix[0][0];
-    BOOST_CHECK_EQUAL(a, -1);
+    BOOST_CHECK_EQUAL(static_cast<int>(a), -1);
+    BOOST_CHECK(matrix[0][0] == -1);
     BOOST_CHECK_EQUAL(matrix.size(), 0);
     matrix[100][100] = 314;
-    BOOST_CHECK_EQUAL(matrix[100][100], 314);
+    BOOST_CHECK(matrix[100][100] == 314);
     BOOST_CHECK_EQUAL(matrix.size(), 1);
 }
 
@@ -111,7 +112,8 @@ BOOST_AUTO_TEST_CASE(test_default_value)
     matrix[102][103] = 315;
     matrix[104][105] = -1;
 
-    BOOST_CHECK_EQUAL(matrix[104][105], -1);
+    BOOST_CHECK(matrix[104][105] == -1);
+    BOOST_CHECK_EQUAL(matrix.size(), 2);
 }
 
 BOOST_AUTO_TEST_CASE(test_diagonals)
@@ -123,16 +125,13 @@ BOOST_AUTO_TEST_CASE(test_diagonals)
         matrix[i][i] = i;
         matrix[i][9 - i] = 9 - i;
     }
-/*
-    for (size_t i = 1; i <= 8; ++i)
+
+    for (size_t i = 0; i < 10; ++i)
     {
-        for (size_t j = 1; j <= 8; ++j)
-        {
-            (void)matrix[i][j];
-        }
+        BOOST_CHECK(matrix[i][i] == i);
+        BOOST_CHECK(matrix[i][9 - i] == 9 - i);
     }
-*/
+
     BOOST_CHECK_EQUAL(matrix.size(), 18);
 }
-
 }

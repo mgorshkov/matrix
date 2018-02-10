@@ -28,7 +28,7 @@ using IndexNodeInternalIterator = typename IndexNodePtrContainer<T, N, Default>:
 struct IExtraNodeDeleter
 {
     virtual ~IExtraNodeDeleter(){}
-    virtual void DeleteNode(void* node) = 0;
+    virtual void DeleteChildNode(void* node) = 0;
 };
 
 template <typename T, size_t N, T Default>
@@ -39,8 +39,22 @@ struct IndexNode : IExtraNodeDeleter
         , mIndex(index)
         , mChildren(std::make_shared<IndexNodePtrContainer<T, N - 1, Default>>())
     {
+#ifdef DEBUG_PRINT
+        std::cout << "IndexNode ctor: N==" << N << ", index=" << index << ", this=" << this << std::endl;
+#endif
     }
 
+    IndexNode(IndexNode& node) = delete;
+
+    IndexNode& operator = (const IndexNode& node) = delete;
+
+    ~IndexNode()
+    {
+#ifdef DEBUG_PRINT
+        std::cout << "~IndexNode, this=" << this << std::endl;
+#endif
+    }
+    
     const IndexNode<T, N - 1, Default>& operator [] (size_t index) const
     {
         auto it = std::find_if(mChildren->begin(), mChildren->end(),
@@ -70,22 +84,37 @@ struct IndexNode : IExtraNodeDeleter
         return *node;
     }
 
-    void DeleteNode(void* node) override
+    void DeleteChildNode(void* node) override
     {
 #ifdef DEBUG_PRINT
-        std::cout << "DeleteNode:" << node << std::endl;
+        std::cout << "DeleteChildNode, N==" << N << ", node=" << node << ", this=" << this << std::endl;
 #endif
         auto it = std::find_if(mChildren->begin(), mChildren->end(),
             [node](auto child)
             {
                 return &*child == static_cast<IndexNode<T, N - 1, Default>*>(node);
             });
-        assert (it != mChildren->end());
-        mChildren->erase(it);
-        if (mChildren->size() > 0)
-            return;
-        if (mParentExtraNodeDeleter)
-            mParentExtraNodeDeleter->DeleteNode(this);
+        if (it != mChildren->end())
+        {
+            mChildren->erase(it);
+            if (mChildren->size() > 0)
+            {
+#ifdef DEBUG_PRINT
+                std::cout << "DeleteChildNode, child deleted, but further deletes terminated, more children:" << mChildren->size() << std::endl;
+#endif            
+                return;
+            }
+
+#ifdef DEBUG_PRINT
+            std::cout << "DeleteChildNode, deleting this from parent:" << mParentExtraNodeDeleter << std::endl;
+#endif            
+
+            if (mParentExtraNodeDeleter)
+            {
+                mParentExtraNodeDeleter->DeleteChildNode(this);
+                mParentExtraNodeDeleter = nullptr;
+            }
+        }
     }
 
     IExtraNodeDeleter* mParentExtraNodeDeleter;
@@ -101,18 +130,28 @@ struct IndexNode<T, 0, Default> : IExtraNodeDeleter
         , mIndex(index)
         , mValue({Default})
     {
+#ifdef DEBUG_PRINT
+        std::cout << "IndexNode ctor, N==0, index=" << index << ", this=" << this << std::endl;
+#endif
     }
 
     IndexNode(IndexNode& node)
-        : mParentExtraNodeDeleter(node.mParentExtraNodeDeleter)
+        : mParentExtraNodeDeleter(nullptr)
         , mIndex(node.mIndex)
         , mValue(node.mValue)
     {
 #ifdef DEBUG_PRINT
-        std::cout << "IndexNode(const IndexNode& node)" << std::endl;
+        std::cout << "IndexNode copy ctor, N==0" << std::endl;
 #endif
-        if (node.IsDefault())
-            mParentExtraNodeDeleter->DeleteNode(&node);
+        node.DeleteNodeFromParentIfDefault();
+        mParentExtraNodeDeleter = node.mParentExtraNodeDeleter;
+    }
+
+    ~IndexNode()
+    {
+#ifdef DEBUG_PRINT
+        std::cout << "~IndexNode, this=" << this << std::endl;
+#endif
     }
 
     IndexNode& operator = (const IndexNode& node)
@@ -123,8 +162,7 @@ struct IndexNode<T, 0, Default> : IExtraNodeDeleter
         mParentExtraNodeDeleter = node.mParentExtraNodeDeleter;
         mIndex = node.mIndex;
         mValue = node.mValue;
-        if (node.IsDefault())
-            mParentExtraNodeDeleter->DeleteNode(&node);
+        node.DeleteNodeFromParentIfDefault();
         return *this;
     }
 
@@ -134,39 +172,42 @@ struct IndexNode<T, 0, Default> : IExtraNodeDeleter
         std::cout << "operator = (const T& value)" << std::endl;
 #endif
         mValue[0] = value;
-        if (value == Default)
-            mParentExtraNodeDeleter->DeleteNode(this);
+        DeleteNodeFromParentIfDefault();
         return *this;
     }
 
-    operator T() const
+    operator T()
     {
 #ifdef DEBUG_PRINT
-        std::cout << "T()" << std::endl;
+        std::cout << "T(), this=" << this << std::endl;
 #endif
-        return mValue[0];
+        return DeleteNodeFromParentIfDefault() ? Default : mValue[0];
     }
 
-    operator T&()
+    void DeleteChildNode(void*) override
     {
 #ifdef DEBUG_PRINT
-        std::cout << "T&()" << std::endl;
+        std::cout << "DeleteChildNode, N==0, this=" << this << std::endl;
 #endif
-        if (IsDefault())
-        {
-            mParentExtraNodeDeleter->DeleteNode(this);
-            return DefaultValue;
-        }
-        return mValue[0];
-    }
-
-    void DeleteNode(void*) override
-    {
     }
 
     bool IsDefault() const
     {
         return mValue[0] == Default;
+    }
+
+    bool DeleteNodeFromParentIfDefault()
+    {
+#ifdef DEBUG_PRINT
+        std::cout << "DeleteNodeFromParentIfDefault: mParentExtraNodeDeleter=" << mParentExtraNodeDeleter << ", this=" << this << std::endl;
+#endif
+        if (IsDefault() && mParentExtraNodeDeleter)
+        {
+            mParentExtraNodeDeleter->DeleteChildNode(this);
+            mParentExtraNodeDeleter = nullptr;
+            return true;
+        }
+        return false;
     }
 
     IExtraNodeDeleter* mParentExtraNodeDeleter;
@@ -187,9 +228,19 @@ std::ostream& operator << (std::ostream& stream, IndexNode<T, 0, Default>& node)
 #endif
     if (node.IsDefault())
     {
-        node.mParentExtraNodeDeleter->DeleteNode(&node);
+        node.mParentExtraNodeDeleter->DeleteChildNode(&node);
+        node.mParentExtraNodeDeleter = nullptr;
         return stream << IndexNode<T, 0, Default>::DefaultValue;
     }
+    return stream << node.mValue[0];
+}
+
+template <typename T, T Default>
+std::ostream& operator << (std::ostream& stream, const IndexNode<T, 0, Default>& node)
+{
+#ifdef DEBUG_PRINT
+    std::cout << "operator <<" << std::endl;
+#endif
     return stream << node.mValue[0];
 }
 
@@ -369,7 +420,7 @@ public:
 };
 
 template <typename T, size_t N, T Default>
-class Matrix
+class Matrix : public IExtraNodeDeleter
 {
 public:
     Matrix()
@@ -403,7 +454,7 @@ public:
     IndexNode<T, N - 1, Default>& operator [] (size_t index)
     {
         if (!mRoot)
-            mRoot = std::make_shared<IndexNode<T, N, Default>>(nullptr, index);
+            mRoot = std::make_shared<IndexNode<T, N, Default>>(this, index);
         return (*mRoot)[index];
     }
 
@@ -417,6 +468,13 @@ public:
         return IndexNodeIterator<T, N, Default>(mRoot, false);
     }
 
+    void DeleteChildNode(void* node) override
+    {
+#ifdef DEBUG_PRINT
+        std::cout << "DeleteChildNode, N==" << N << ", node=" << node << ", this=" << this << std::endl;
+        mRoot = nullptr;
+#endif
+    }
 private:
     IndexNodePtr<T, N, Default> mRoot;
 };
