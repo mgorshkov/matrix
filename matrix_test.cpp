@@ -23,6 +23,12 @@ BOOST_AUTO_TEST_CASE(test_get_element)
     auto a = matrix[0][0];
     BOOST_CHECK_EQUAL(static_cast<int>(a), -1);
     BOOST_CHECK(matrix[0][0] == -1);
+    auto Lambda = [](const auto& elem)
+    {
+        BOOST_CHECK(static_cast<const int>(elem) == -1);
+    };
+    Lambda(matrix[0][0]);
+
     BOOST_CHECK_EQUAL(matrix.size(), 0);
     matrix[100][100] = 314;
     BOOST_CHECK(matrix[100][100] == 314);

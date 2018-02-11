@@ -159,10 +159,10 @@ struct IndexNode<T, 0, Default> : IExtraNodeDeleter
 #ifdef DEBUG_PRINT
         std::cout << "operator = (const IndexNode& node)" << std::endl;
 #endif
-        mParentExtraNodeDeleter = node.mParentExtraNodeDeleter;
         mIndex = node.mIndex;
         mValue = node.mValue;
         node.DeleteNodeFromParentIfDefault();
+        mParentExtraNodeDeleter = node.mParentExtraNodeDeleter;
         return *this;
     }
 
@@ -184,6 +184,14 @@ struct IndexNode<T, 0, Default> : IExtraNodeDeleter
         return DeleteNodeFromParentIfDefault() ? Default : mValue[0];
     }
 
+    operator const T() const
+    {
+#ifdef DEBUG_PRINT
+        std::cout << "T(), this=" << this << std::endl;
+#endif
+        return DeleteNodeFromParentIfDefault() ? Default : mValue[0];
+    }
+
     void DeleteChildNode(void*) override
     {
 #ifdef DEBUG_PRINT
@@ -196,21 +204,21 @@ struct IndexNode<T, 0, Default> : IExtraNodeDeleter
         return mValue[0] == Default;
     }
 
-    bool DeleteNodeFromParentIfDefault()
+    bool DeleteNodeFromParentIfDefault() const
     {
 #ifdef DEBUG_PRINT
         std::cout << "DeleteNodeFromParentIfDefault: mParentExtraNodeDeleter=" << mParentExtraNodeDeleter << ", this=" << this << std::endl;
 #endif
         if (IsDefault() && mParentExtraNodeDeleter)
         {
-            mParentExtraNodeDeleter->DeleteChildNode(this);
+            mParentExtraNodeDeleter->DeleteChildNode((void*)this);
             mParentExtraNodeDeleter = nullptr;
             return true;
         }
         return false;
     }
 
-    IExtraNodeDeleter* mParentExtraNodeDeleter;
+    mutable IExtraNodeDeleter* mParentExtraNodeDeleter;
     size_t mIndex;
     std::vector<T> mValue;
 
@@ -226,10 +234,8 @@ std::ostream& operator << (std::ostream& stream, IndexNode<T, 0, Default>& node)
 #ifdef DEBUG_PRINT
     std::cout << "operator <<" << std::endl;
 #endif
-    if (node.IsDefault())
+    if (node.DeleteNodeFromParentIfDefault())
     {
-        node.mParentExtraNodeDeleter->DeleteChildNode(&node);
-        node.mParentExtraNodeDeleter = nullptr;
         return stream << IndexNode<T, 0, Default>::DefaultValue;
     }
     return stream << node.mValue[0];
@@ -239,8 +245,12 @@ template <typename T, T Default>
 std::ostream& operator << (std::ostream& stream, const IndexNode<T, 0, Default>& node)
 {
 #ifdef DEBUG_PRINT
-    std::cout << "operator <<" << std::endl;
+    std::cout << "operator << const" << std::endl;
 #endif
+    if (node.DeleteNodeFromParentIfDefault())
+    {
+        return stream << IndexNode<T, 0, Default>::DefaultValue;
+    }
     return stream << node.mValue[0];
 }
 
